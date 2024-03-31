@@ -87,12 +87,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: whitesmoke;
 }
 
 a {
@@ -104,4 +99,38 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.maindiv {
+  color: black;
+}
+
+.header {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: large;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.containt-body {
+  display: grid;
+  place-items: center; /* 水平および垂直方向の中央揃え */
+  height: 100vh;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column; /* 子要素を縦方向に並べる */
+  gap: 10px; /* 各要素の間隔 */
+}
+
+.member-card {
+  padding: 10px;
+  box-shadow: 0px 0px 15px -5px #141414;
+  border-radius: 10px;
 }

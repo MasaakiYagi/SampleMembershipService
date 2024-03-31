@@ -1,29 +1,50 @@
-// pages/jwtChecker.tsx
 "use client";
 import { useEffect, useState } from 'react';
-import { Base64 } from 'js-base64';
+import { useRouter } from "next/navigation"; // ルーターフックのインポート
+import './globals.css';
 
 const Home = () => {
+  const [isJwt, setIsJwt] = useState<boolean>(false);
   const [jwtMessage, setJwtMessage] = useState<string>('');
+  const router = useRouter(); // useRouter フックの使用
 
   useEffect(() => {
-    // ローカルストレージからJWTを取得
     const jwt = localStorage.getItem('token');
     if (jwt) {
-      // JWTが存在する場合、デコードして中身を表示
-      const payload = jwt.split('.')[1]; // JWTは'.'で区切られた3部分から成る
-      const decodedPayload = Base64.decode(payload); // ペイロード部分をデコード
-      setJwtMessage(`JWTあり: ${decodedPayload}`);
+      setJwtMessage(`JWTあり`);
+      setIsJwt(true);
     } else {
-      // JWTが存在しない場合
       setJwtMessage('JWTなし');
     }
   }, []);
 
+  const handleLoginRedirect = () => {
+    router.push('/login'); // `/login` への遷移
+  };
+
+  const handleMyRedirect = () => {
+    router.push('mypage'); // `/mypage` への遷移
+  };
+
   return (
-    <div>
-      <p>{jwtMessage}</p>
-    </div>
+    <>
+      <div className='maindiv'>
+        <div className="header blue">トップページ</div>
+        <div className='containt-body'>
+          <div>
+            <p>{jwtMessage}</p>
+            {!isJwt && (
+              // JWTがない場合、ログインページへ
+              <button onClick={handleLoginRedirect}>ログインページへ</button>
+            )}
+            {isJwt && (
+              // JWTがある場合、マイページへ
+              <button onClick={handleMyRedirect}>マイページへ</button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ const Login = () => {
     const hashedPassword = await hashPassword(password);
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const Login = () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        localStorage.setItem('token', data.token); // JWTをローカルストレージに保存
+        localStorage.setItem('token', data["access_token"]); // JWTをローカルストレージに保存
         router.push('/mypage'); // ダッシュボードページへリダイレクト
       } else {
         alert('ログインに失敗しました');
@@ -47,21 +47,28 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">ログイン</button>
-    </form>
+    <>
+      <div className="header blue">ログイン画面</div>
+      <div className='containt-body'>
+        <div>
+          <form onSubmit={handleLogin} className='form-container'>
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">ログイン</button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 
